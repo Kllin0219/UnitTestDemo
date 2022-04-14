@@ -1,6 +1,11 @@
 from com.android.monkeyrunner import MonkeyRunner, MonkeyDevice
 from com.android.monkeyrunner.easy import EasyMonkeyDevice,By  
-import time   
+import time
+import subprocess
+
+def sh(command):
+    p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr= subprocess.STDOUT)
+    print p.stdout.read()
 
 # Connects to the current device, returning a MonkeyDevice object
 device = MonkeyRunner.waitForConnection()
@@ -18,7 +23,7 @@ activity = 'com.asus.gamecenter.GameCenterActivity'
 runComponent = package + '/' + activity
 # Runs the component
 device.startActivity(component=runComponent)
-MonkeyRunner.sleep(10)
+MonkeyRunner.sleep(5)
 
 # Takes a screenshot
 result = device.takeSnapshot()
@@ -30,7 +35,7 @@ print('rotation landscape')
 device.shell('content insert --uri content://settings/system --bind name:s:accelerometer_rotation --bind value:i:0')
 
 device.shell('content insert --uri content://settings/system --bind name:s:user_rotation --bind value:i:1')
-MonkeyRunner.sleep(10)
+MonkeyRunner.sleep(5)
 
 result = device.takeSnapshot()
 # Writes the screenshot to a file
@@ -61,6 +66,10 @@ for i in range(1, 21):
 # Remove finger from screen
 device.touch(820, 1194, MonkeyDevice.UP) 
 
-MonkeyRunner.sleep(3)
+MonkeyRunner.sleep(5)
+meminfo = device.shell('dumpsys meminfo com.asus.gamecenter')
+print(meminfo)
+
+MonkeyRunner.sleep(5)
 
 device.press('KEYCODE_HOME', MonkeyDevice.DOWN_AND_UP )
