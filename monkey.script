@@ -1,0 +1,13 @@
+type=user
+count=10
+speed=1.0
+start data >>
+LaunchActivity(com.asus.gamecenter,com.asus.gamecenter.GameCenterActivity)
+UserWait(10000)
+RunCmd(screencap -p /sdcard/tmp.png)
+UserWait(5000)
+RotateScreen(1,0)
+UserWait(10000)
+RotateScreen(0,0)
+DispatchPress(KEYCODE_HOME)
+UserWait(5000)
